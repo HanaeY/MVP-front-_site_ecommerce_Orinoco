@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/style.css">
+    
+    <title>Mon panier</title>
+</head>
+<body>
+    <header class="row">
+        <div class="col-12 jumbotron">
+            <div class="container text-center">
+                <h1 id="titre" class="jumbotron-heading">Il ne vous reste plus qu'à valider votre commande !</h1>
+                <p class="lead text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                <a href="index.html" class="btn btn-primary">Je continue mes achats</a>
+            </div>
+        </div>    
+    </header>
+    <main class="container">
+        <div>
+            <h2>Mon panier</h2>
+            <br>
+            <table class="table text-center">
+                <thead class="thead-light">
+                    <th scope="col" id="">Produit</th>
+                    <th scope="col" id="">Couleur</th>
+                    <th scope="col" id="">Quantité</th>
+                    <th scope="col" id="">Prix unitaire (tva incluse)</th>
+                </thead>
+                    <tr>
+                        <td>Norbert</td>
+                        <td>Marron</td>
+                        <td>1</td>
+                        <td>20 €</td>
+                    </tr>
+                <tbody>
+                </tbody>
+            </table>
+            <p>Frais de port : <span>5</span> €</p>
+            <p>Total à payer : <span>20</span> €</p>
+        </div>
+        <br>
+        <div>
+            <h2>Paiement</h2>
+            <br>
+            <form action="">
+                <div class="row">
+                     <p><strong>Mes informations</strong></p>
+                    <div class="form-group col-4">
+                        <label for="user-name">Nom</label>
+                        <input type="text" class="form-control" id="user-name" name="user-name" required>
+                    </div>
+                    <div class="form-group col-4">
+                        <label for="user-firstname">Prénom</label>
+                        <input type="text" class="form-control" id="user-firstname" name="user-firstname" required>
+                    </div>
+                    <div class="form-group col-4">
+                        <label for="user-email">Mail</label>
+                        <input type="email" class="form-control" id="user-email" name="user-email" required>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="form-group col-6">
+                        <label for="user-street">Numéro et libellé de la rue</label>
+                        <input type="text" class="form-control" id="user-street" name="user-street" required>
+                    </div>
+                    <div class="form-group col-2">
+                        <label for="user-zipcode">Code postal</label>
+                        <input type="number" class="form-control" id="user-zipcode" name="user-zipcode" required>
+                    </div>
+                    <div class="form-group col-4">
+                        <label for="user-city">ville</label>
+                        <input type="text" class="form-control" id="user-city" name="user-city" required>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <p><strong>Carte bancaire</strong></p>
+                    <div class="form-group col-4">
+                        <label for="user-bankcard">Numéro de carte bancaire</label>
+                        <input type="number" class="form-control" id="user-bankcard" name="user-bankcard" required>
+                    </div>
+                    <div class="form-group col-4">
+                        <label for="user-bankcard-name">Nom du titulaire</label>
+                        <input type="text" class="form-control" id="user-bankcard-name" name="user-bankcard-name" required>
+                    </div>
+                    <div class="form-group col-2">
+                        <label for="user-security-code">Code de sécurité</label>
+                        <input type="number" class="form-control" id="user-security-code" name="user-security-code" required>
+                    </div>
+                    <div class="form-group col-2">
+                        <label for="user-bankcard-expires">Date d'expiration</label>
+                        <input type="date" class="form-control" id="user-bankcard-expires" name="user-bankcard-expires" required>
+                    </div>
+                </div>
+                <br>
+                <div class="text-center">
+                    <input type="submit" value="Je paye et j'envoie ma commande" class="btn btn-danger">
+                </div>
+            </form>
+        </div>
+    </main>
+</body>
+</html>
