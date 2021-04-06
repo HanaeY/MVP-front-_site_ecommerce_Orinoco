@@ -1,0 +1,16 @@
+.jumbotron {
+    background-color: lightgray;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+}
+
+img {
+    height: 40vh;
+    object-fit: cover;
+}
+
+.card {
+    padding-bottom: 10px;
+    padding-top: 10px;
+    margin-bottom: 10px;
+}
