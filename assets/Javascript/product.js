@@ -1,18 +1,21 @@
 
 /* AFFICHER DYNAMIQUEMENT LES DONNÉES D'UN TEDDY SUR LA PAGE PRODUIT */
 
+// déclaration de variables globales 
+let teddyId;
+let selectedColor;
+let totalPrice;
+
 // Utilisation des query parameters pour récupérer l'ID du teddy sélectionné 
 
-let teddyId;
 
 const getTeddyId = () => {
     const urlParam = window.location.search; //attribut qui donne les param de l'url
     teddyId = urlParam.replace("?id=", ""); 
-    console.log('Le teddy a pour id', teddyId); 
     return teddyId
 };
 
-// Appel de l'API pour récupérer les données du Teddy sélectionné
+// Fonction principale (appelle l'API puis les fonctions qui traitent la réponse)
 
 const getTeddyData = async () => {
     try {
@@ -20,7 +23,9 @@ const getTeddyData = async () => {
         if(response.ok) {
             var teddyData = await response.json();
             displayTeddyData(teddyData);
+            selectColor(teddyData);
             updatePrice(teddyData);
+            addToBasket(teddyData);
         } else {
             console.log('Erreur. Réponse du serveur : ', response);
         }
@@ -47,15 +52,48 @@ const displayTeddyData = (data) => {
     }
 };
 
-// Traduire les couleurs 
+// Traduire les couleurs en français 
+
+// Mettre la couleur à jour en fonction de la valeur choisie 
+
+const selectColor = (data) => {
+    selectedColor = data.colors[0];
+    document.getElementById('selected-teddy-colors').addEventListener('input', (event) => {
+        selectedColor = event.target.value; 
+    });
+    return selectedColor; 
+}
 
 // Mettre le prix à jour en fonction de la quantité saisie 
 
 const updatePrice = (data) => {
+    totalPrice = data.price / 100;
     document.getElementById('selected-teddy-quantity').addEventListener('input', (event) => {
-        document.getElementById("selected-teddy-price").textContent = 'Prix total : ' + data.price * event.target.value / 100 + '€';
+        totalPrice = data.price * event.target.value / 100;
+        document.getElementById("selected-teddy-price").textContent = 'Prix total : ' + totalPrice + '€';
+    });
+    return totalPrice;
+}
+
+// Ajouter le·s produit·s dans le localstorage 
+
+const addToBasket = (data) => {
+    document.getElementById('add-to-basket').addEventListener('click', (event) => {
+        event.preventDefault();
+        let item = {
+            id : data._id,
+            name : data.name,
+            color : selectedColor,
+            quantity : totalPrice / data.price * 100,
+            price : totalPrice,
+        };
+        console.log(item);
+        localStorage.setItem("item", JSON.stringify(item)); // élément bien enregistré dans le local storage
+        alert('vous avez ajouté' + item.quantity + ' produit(s) à votre panier');
     });
 }
+
+// mettre seulement l'id et la quantité dans le local storage ? 
 
 getTeddyId()
 getTeddyData()
