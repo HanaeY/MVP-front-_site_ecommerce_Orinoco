@@ -3,7 +3,7 @@
 // Appel de l'API pour récupérer les données des teddies 
 const getTeddies = async () => {
     try {
-        var response = await fetch('https://ab-p5-api.herokuapp.com/api/teddies');
+        var response = await fetch('http://localhost:3000/api/teddies');
         if(response.ok) {
             var teddies = await response.json(); // la méthode .json retourne une promesse 
             displayTeddies(teddies)
@@ -30,11 +30,8 @@ const displayTeddies = (data) => {
 getTeddies()
 
 // TO DO : 
-// faire une recherche sur les paramètres de requête en js >> jeudi
-// page produit appelle les param de la requête 
-// recherche sur les param de la requête >> retrouver l'ID 
-// insérer l'id du produit à l'URL product.html 
-// ajouter quantité à la page produit 
+// faire une recherche sur les paramètres de requête en js >> jeudi,OK
+// page produit appelle les param de la requête >> vendredi, OK 
 // implémenter l'ajout de teddy au panier 
 // recherche sur le local storage 
 // passer une commande et récupérer l'identifiant 

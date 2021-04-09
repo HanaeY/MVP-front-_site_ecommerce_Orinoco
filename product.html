@@ -27,7 +27,7 @@
         <div class="card">
             <div class="row">
                 <div class="col-md-3">
-                    <img src="" alt="" class="card-img" id="img-teddy-1">
+                    <img src="" alt="" class="card-img" id="selected-teddy-img">
                 </div>
                 <div class="col-md-9 card-body">
                     <h2 class="card-title" id="selected-teddy-name">name</h2>
@@ -38,9 +38,10 @@
                     </div>
                     <br>
                     <div>
-                        <label for="selected-teddy-quantity">Choisissez une option</label>
-                        <select name="quantity_list" id="selected-teddy-quantity"></select>
+                        <label for="selected-teddy-quantity">Quantité souhaitée</label>
+                        <input type="number" name="quantity_list" id="selected-teddy-quantity">
                     </div>
+                    <br>
                     <p class="card-text" id="selected-teddy-price">xx €</p>
                     <a href="" class="btn btn-primary">Ajouter au panier</a>
                 </div>
