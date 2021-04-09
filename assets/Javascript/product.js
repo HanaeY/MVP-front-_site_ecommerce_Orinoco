@@ -20,6 +20,7 @@ const getTeddyData = async () => {
         if(response.ok) {
             var teddyData = await response.json();
             displayTeddyData(teddyData);
+            updatePrice(teddyData);
         } else {
             console.log('Erreur. Réponse du serveur : ', response);
         }
@@ -46,8 +47,15 @@ const displayTeddyData = (data) => {
     }
 };
 
+// Traduire les couleurs 
+
 // Mettre le prix à jour en fonction de la quantité saisie 
 
+const updatePrice = (data) => {
+    document.getElementById('selected-teddy-quantity').addEventListener('input', (event) => {
+        document.getElementById("selected-teddy-price").textContent = 'Prix total : ' + data.price * event.target.value / 100 + '€';
+    });
+}
 
 getTeddyId()
 getTeddyData()
