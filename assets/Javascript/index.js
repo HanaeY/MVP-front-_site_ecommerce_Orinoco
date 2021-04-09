@@ -17,24 +17,38 @@ const getTeddies = async () => {
 
 // Modification du DOM pour insérer les données des teddies sur la page 
 const displayTeddies = (data) => {
-    for(let i = 1 ; i < 5 ; i++) {
-        document.getElementById(`name-teddy-${i}`).textContent = data[i-1].name;
-        document.getElementById(`description-teddy-${i}`).textContent = data[i-1].description;
-        document.getElementById(`price-teddy-${i}`).textContent = data[i-1].price /100 + " €";
-        document.getElementById(`img-teddy-${i}`).setAttribute("src", data[i-1].imageUrl);
-        document.getElementById(`img-teddy-${i}`).setAttribute("alt", "photo de " + data[i-1].name);
-        document.getElementById(`btn-teddy-${i}`).setAttribute("href", "product.html?id=" + data[i-1]._id);
+    for(let i = 0 ; i < data.length ; i++) {
+        // création d'un produit teddy dans le bloc produits de la page 
+        let teddy = document.createElement('div');
+        teddy.classList.add('card', 'col-md-6');
+        document.getElementById('bloc-produits').appendChild(teddy);
+        // création des éléments de ce nouvel élément 
+        let name = document.createElement('h2');
+        let description = document.createElement('p');
+        let price = document.createElement('p');
+        let image = document.createElement('img');
+        let button = document.createElement('a');
+        teddy.appendChild(image);
+        teddy.appendChild(name);
+        teddy.appendChild(description);
+        teddy.appendChild(price);
+        teddy.appendChild(button);
+        // définition des classes de ces éléments 
+        name.classList.add('card-title');
+        description.classList.add('card-text');
+        price.classList.add('card-text');
+        image.classList.add('card-img-top');
+        button.classList.add('btn', 'btn-primary');
+        // définition des attributs de ces éléments 
+        image.setAttribute('src', data[i].imageUrl);
+        image.setAttribute('alt', 'photo de ' + data[i].name);
+        button.setAttribute('href', 'product.html?id=' + data[i]._id);
+        // ajout du contenu texte
+        name.textContent = data[i].name;
+        description.textContent = data[i].description;
+        price.textContent = data[i].price / 100 + " €";
+        button.textContent = 'Voir le produit';
     }
 }
 
 getTeddies()
-
-// TO DO : 
-// faire une recherche sur les paramètres de requête en js >> jeudi,OK
-// page produit appelle les param de la requête >> vendredi, OK 
-// implémenter l'ajout de teddy au panier 
-// recherche sur le local storage 
-// passer une commande et récupérer l'identifiant 
-// https://openclassrooms.workplace.com/100049595616417/videos/173124777684042
-
-// prochaine session jeudi 15 à 15h. 
