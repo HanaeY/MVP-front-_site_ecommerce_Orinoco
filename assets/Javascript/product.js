@@ -4,7 +4,16 @@
 // déclaration de variables globales 
 let teddyId;
 let selectedColor;
-let totalPrice;
+let quantity = document.getElementById('selected-teddy-quantity').value;
+let basket;
+
+class BasketItem {
+    constructor(id, color, quantity) {
+        this.id = id;
+        this.color = color;
+        this.quantity = quantity;
+    }
+};
 
 // Utilisation des query parameters pour récupérer l'ID du teddy sélectionné 
 
@@ -25,7 +34,7 @@ const getTeddyData = async () => {
             displayTeddyData(teddyData);
             selectColor(teddyData);
             updatePrice(teddyData);
-            addToBasket(teddyData);
+            addToBasket();
         } else {
             console.log('Erreur. Réponse du serveur : ', response);
         }
@@ -62,41 +71,47 @@ const selectColor = (data) => {
         selectedColor = event.target.value; 
     });
     return selectedColor; 
-}
+};
 
 // Mettre le prix à jour en fonction de la quantité saisie 
 
 const updatePrice = (data) => {
     totalPrice = data.price / 100;
     document.getElementById('selected-teddy-quantity').addEventListener('input', (event) => {
-        totalPrice = data.price * event.target.value / 100;
+        quantity = event.target.value;
+        totalPrice = data.price * quantity / 100;
         document.getElementById("selected-teddy-price").textContent = 'Prix total : ' + totalPrice + '€';
     });
-    return totalPrice;
-}
+};
 
 // Ajouter le·s produit·s dans le localstorage 
 
-const addToBasket = (data) => {
-    document.getElementById('add-to-basket').addEventListener('click', (event) => {
-        event.preventDefault();
-        let item = {
-            id : data._id,
-            name : data.name,
-            color : selectedColor,
-            quantity : totalPrice / data.price * 100,
-            price : totalPrice,
-        };
-        console.log(item);
-        localStorage.setItem("item", JSON.stringify(item)); // élément bien enregistré dans le local storage
-        alert('vous avez ajouté' + item.quantity + ' produit(s) à votre panier');
-    });
-}
+const addToBasket = () => {
+    document.getElementById('add-to-basket').addEventListener('click', (e) => {
+        e.preventDefault();
+        let item = new BasketItem(teddyId, selectedColor, quantity);
+        console.log('item', item);
+        //récupérer le contenu du local storage
+        basket = JSON.parse(localStorage.getItem('basket'));
+        if(basket == null) {
+            basket = [];
+        }
+        //ajouter le nouvel item dans le panier
+        basket.push(item);
+        console.log('basket', basket); // 
+        //remettre le panier sur le local storage
+        localStorage.setItem("basket", JSON.stringify(basket)); // le localstorage est un tableau d'objets (id, couleur, qté)
 
-// mettre seulement l'id et la quantité dans le local storage ? 
+        //message d'info
+        document.getElementById('info').textContent = 'Vous avez ajouté ' + item.quantity + ' produit(s) à votre panier';
+        document.getElementById('info').classList.add('alert', 'alert-success');
+    });
+};
 
 getTeddyId()
 getTeddyData()
+
+
 
 
 
