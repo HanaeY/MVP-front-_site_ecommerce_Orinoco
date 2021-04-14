@@ -8,10 +8,12 @@ let quantity = document.getElementById('selected-teddy-quantity').value;
 let basket;
 
 class BasketItem {
-    constructor(id, color, quantity) {
+    constructor(id, name, color, quantity, price) {
         this.id = id;
+        this.name = name;
         this.color = color;
         this.quantity = quantity;
+        this.price = price/100;
     }
 };
 
@@ -20,7 +22,7 @@ class BasketItem {
 
 const getTeddyId = () => {
     const urlParam = window.location.search; //attribut qui donne les param de l'url
-    teddyId = urlParam.replace("?id=", ""); 
+    teddyId = urlParam.replace('?id=', ''); 
     return teddyId
 };
 
@@ -34,7 +36,7 @@ const getTeddyData = async () => {
             displayTeddyData(teddyData);
             selectColor(teddyData);
             updatePrice(teddyData);
-            addToBasket();
+            addToBasket(teddyData);
         } else {
             console.log('Erreur. Réponse du serveur : ', response);
         }
@@ -86,10 +88,10 @@ const updatePrice = (data) => {
 
 // Ajouter le·s produit·s dans le localstorage 
 
-const addToBasket = () => {
+const addToBasket = (data) => {
     document.getElementById('add-to-basket').addEventListener('click', (e) => {
         e.preventDefault();
-        let item = new BasketItem(teddyId, selectedColor, quantity);
+        let item = new BasketItem(teddyId, data.name, selectedColor, quantity, data.price);
         console.log('item', item);
         //récupérer le contenu du local storage
         basket = JSON.parse(localStorage.getItem('basket'));
