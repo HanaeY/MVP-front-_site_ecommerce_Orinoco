@@ -39,7 +39,7 @@
             </table>
             <button id="clear-basket" class="btn btn-danger">Vider le panier</button>
             <br><br>
-            <p class="text-primary text-center border border-primary">Total à payer : <span id="total-price"></span> €</p>
+            <div id="price-container"></div>
         </div>
         <br>
         <div>
@@ -48,58 +48,36 @@
             <form action="">
                 <div class="row">
                      <p><strong>Mes informations</strong></p>
+                    <div id="input-alert"></div>
                     <div class="form-group col-4">
-                        <label for="user-name">Nom</label>
-                        <input type="text" class="form-control" id="user-name" name="user-name" required>
+                        <label for="lastName">Nom</label>
+                        <input type="text" class="form-control" id="lastName" name="lastName" required>
                     </div>
                     <div class="form-group col-4">
-                        <label for="user-firstname">Prénom</label>
-                        <input type="text" class="form-control" id="user-firstname" name="user-firstname" required>
+                        <label for="firstName">Prénom</label>
+                        <input type="text" class="form-control" id="firstName" name="firstName" required>
                     </div>
                     <div class="form-group col-4">
-                        <label for="user-email">Mail</label>
-                        <input type="email" class="form-control" id="user-email" name="user-email" required>
+                        <label for="email">Mail</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
                     </div>
                 </div>
                 <br>
                 <div class="row">
-                    <div class="form-group col-6">
-                        <label for="user-street">Numéro et libellé de la rue</label>
-                        <input type="text" class="form-control" id="user-street" name="user-street" required>
-                    </div>
-                    <div class="form-group col-2">
-                        <label for="user-zipcode">Code postal</label>
-                        <input type="number" class="form-control" id="user-zipcode" name="user-zipcode" required>
+                    <div class="form-group col-8">
+                        <label for="address">Numéro et libellé de la rue</label>
+                        <input type="text" class="form-control" id="address" name="address" required>
                     </div>
                     <div class="form-group col-4">
-                        <label for="user-city">ville</label>
-                        <input type="text" class="form-control" id="user-city" name="user-city" required>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <p><strong>Carte bancaire</strong></p>
-                    <div class="form-group col-4">
-                        <label for="user-bankcard">Numéro de carte bancaire</label>
-                        <input type="number" class="form-control" id="user-bankcard" name="user-bankcard" required>
-                    </div>
-                    <div class="form-group col-4">
-                        <label for="user-bankcard-name">Nom du titulaire</label>
-                        <input type="text" class="form-control" id="user-bankcard-name" name="user-bankcard-name" required>
-                    </div>
-                    <div class="form-group col-2">
-                        <label for="user-security-code">Code de sécurité</label>
-                        <input type="number" class="form-control" id="user-security-code" name="user-security-code" required>
-                    </div>
-                    <div class="form-group col-2">
-                        <label for="user-bankcard-expires">Date d'expiration</label>
-                        <input type="date" class="form-control" id="user-bankcard-expires" name="user-bankcard-expires" required>
+                        <label for="city">ville</label>
+                        <input type="text" class="form-control" id="city" name="city" required>
                     </div>
                 </div>
                 <br>
                 <div class="text-center">
-                    <input type="submit" value="Je paye et j'envoie ma commande" class="btn btn-danger">
+                    <input type="submit" value="Je paye et j'envoie ma commande" class="btn btn-danger" id="submit">
                 </div>
+                <br><br>
             </form>
         </div>
     </main>
