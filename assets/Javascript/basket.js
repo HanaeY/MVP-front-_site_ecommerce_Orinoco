@@ -172,7 +172,7 @@ const sendOrder = () => {
             alert('formulaire non complété');
             sendOrder();
         } else {
-            let contact = new Contact(firstName, lastName, address, city, email);
+            let contact = new Contact(firstNameInput.value, lastNameInput.value, addressInput.value, cityInput.value, emailInput.value);
             console.log(contact);
         }
     });
@@ -180,21 +180,6 @@ const sendOrder = () => {
 
 
 sendOrder()
-
-
-/*
-retourne: 
-​
-address: <input id="address" class="form-control" type="text" name="address" required="">
-​
-city: undefined
-​
-email: <input id="email" class="form-control" type="email" name="email" required="">
-​
-firstName: undefined
-​
-lastName: undefined
- */
 
    
 
