@@ -1,7 +1,7 @@
-// variables globales
+/* variables globales */
 const basket = new Map(); 
 
-// Bouton 'vider le panier"
+/* Bouton 'vider le panier" */
 document.getElementById('clear-basket').addEventListener('click', () => {
     localStorage.removeItem('basket');
 })
@@ -28,8 +28,30 @@ const summarizeOrder = () => {
         }
     }
     console.log(basket);
+    console.log('test', basket.get(key[0]).name);
+};
+
+// Afficher les données du résumé de commande sur la page 
+const displayData = () => {
+    for(let i = 0 ; i < basket.length ; i++) {
+        let newLine = document.createElement('tr');
+        document.getElementById('table').appendChild(newLine);
+        let name = document.createElement('td');
+        let color = document.createElement('td');
+        let quantity = document.createElement('td');
+        let price = document.createElement('td');
+        newLine.appendChild(name);
+        newLine.appendChild(color);
+        newLine.appendChild(quantity);
+        newLine.appendChild(price);
+        name.textContent = basket.get(key[i]).name;
+        color.textContent = basket.get(key[i]).color;
+        quantity.textContent = basket.get(key[i]).quantity;
+        price.textContent = basket.get(key[i]).price;
+    }
 };
 
 summarizeOrder()
+//displayData()
 
 
