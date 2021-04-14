@@ -28,16 +28,12 @@ const summarizeOrder = () => {
         }
     }
     console.log(basket);
-    //console.log('test', basket.get('5beaa8bf1c9d440000a57d94Palebrown').name); // affiche test Arnold 
-    //console.log('test2', basket.get(key[2]).name); // erreur : key is not defined 
-    //console.log('test3', basket.get('').name); 
 };
 
 // Afficher les données du résumé de commande sur la page 
 
 const displayData = () => {
     for(let item of basket.values()){
-        console.log(item.name);
         let newLine = document.createElement('tr');
         document.getElementById('table').appendChild(newLine);
         let name = document.createElement('td');
@@ -55,27 +51,19 @@ const displayData = () => {
     }
 }
 
-/*
-const displayData = () => {
-    for(let i = 0 ; i < basket.length ; i++) {
-        let newLine = document.createElement('tr');
-        document.getElementById('table').appendChild(newLine);
-        let name = document.createElement('td');
-        let color = document.createElement('td');
-        let quantity = document.createElement('td');
-        let price = document.createElement('td');
-        newLine.appendChild(name);
-        newLine.appendChild(color);
-        newLine.appendChild(quantity);
-        newLine.appendChild(price);
-        name.textContent = basket.get(key[i]).name;
-        color.textContent = basket.get(key[i]).color;
-        quantity.textContent = basket.get(key[i]).quantity;
-        price.textContent = basket.get(key[i]).price;
+// Afficher le prix total 
+
+const displayTotalPrice = () => {
+    let totalPrice = 0;
+    for (let item of basket.values()) {
+        let itemPrice = item.quantity * item.price;
+        totalPrice += itemPrice;
+        document.getElementById('total-price').textContent = totalPrice;
     }
-};*/
+}
 
 summarizeOrder()
 displayData()
+displayTotalPrice()
 
 
