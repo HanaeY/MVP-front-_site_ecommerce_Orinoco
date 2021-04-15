@@ -1,7 +1,7 @@
 /* variables globales */
 const basket = new Map(); 
 let basketBtn = document.getElementById('clear-basket');
-let displayedPrice;
+let productArray = [];
 
 /* vider le panier */
 
@@ -75,7 +75,7 @@ const displayTotalPrice = (data) => {
         let itemPrice = item.quantity * item.price;
         totalPrice += itemPrice;
     }
-    displayedPrice = document.createElement('p');
+    let displayedPrice = document.createElement('p');
     displayedPrice.classList.add('total-price');
     document.getElementById('price-container').appendChild(displayedPrice);
     displayedPrice.textContent = 'Prix total à payer : ' + totalPrice + ' €';
@@ -88,15 +88,31 @@ const clearBasket = () => {
     document.getElementById('price-container').textContent = '';
     document.getElementById('table').textContent = '';
     document.getElementById('basket-info').textContent = 'Votre panier est vide';
+    productArray = [];
+    console.log('array quand panier vidé ', productArray);
     basketBtn.disabled = true;
 };
 
+/* Tableau de produits à envoyer au serveur */
+// les produit sont envoyés sous forme d'un tableau contenant des strings product_id 
 
+const buildOrderArray = () => {
+    if(basket != null) {
+        for(let item of basket.values()) {
+            let itemId = item.id;
+            let itemQuantity = parseInt(item.quantity);
+            for(let i = 0 ; i < itemQuantity ; i++) {
+                productArray.push(itemId);
+            }
+        }
+        console.log('tableau à envoyer au serveur ', productArray);
+    }
+}
 
 processBasket()
+buildOrderArray()
 
 /* Envoi de la commande au serveur */ 
-// les produit sont envoyés sous forme d'un tableau contenant des strings product_id 
 
 // Validation des données saisies dans le formulaire 
 
