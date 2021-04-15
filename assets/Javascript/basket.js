@@ -100,21 +100,29 @@ const clearBasket = () => {
 
 const buildOrderArray = () => {
     if(basket != null) {
+        //insertion des id de la map dans un tableau 
+        let array = [];
         for(let item of basket.values()) {
             let itemId = item.id;
-            let itemQuantity = parseInt(item.quantity);
-            for(let i = 0 ; i < itemQuantity ; i++) {
-                productArray.push(itemId);
-            }
+            array.push(itemId);
         }
-        console.log('tableau à envoyer au serveur ', productArray);
+        console.log('tableau intermédiaire ', array);
+
+        // suppression des doublons dans le tableau 
+        array.forEach((i) => {
+            if(productArray.indexOf(i) == -1) {
+                productArray.push(i);
+            }
+        });
+        console.log('tableau à envoyer ', productArray);
+
     }
 }
 
 processBasket()
 buildOrderArray()
 
-//test 2
+/* Validation des données du formulaire */
 
 document.forms['order-form'].addEventListener('submit', (e) => {
     let error;
