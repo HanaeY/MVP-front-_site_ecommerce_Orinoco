@@ -2,6 +2,8 @@
 const basket = new Map(); 
 let basketBtn = document.getElementById('clear-basket');
 let productArray = [];
+let submitBtn = document.getElementById('submit');
+//submitBtn.disabled = true;
 
 /* vider le panier */
 
@@ -112,112 +114,44 @@ const buildOrderArray = () => {
 processBasket()
 buildOrderArray()
 
-/* Envoi de la commande au serveur */ 
+//test 2
 
-// Validation des données saisies dans le formulaire 
+document.forms['order-form'].addEventListener('submit', (e) => {
+    let error;
+    let inputs = this;
+    let formMessage = document.getElementById('input-alert');
 
-let firstNameInput = document.getElementById('firstName');
-let lastNameInput = document.getElementById('lastName');
-let emailInput = document.getElementById('email');
-let addressInput = document.getElementById('address');
-let cityInput = document.getElementById('city');
-let alertContainer = document.getElementById('input-alert');
-
-let firstName;
-let lastName;
-let city;
-
-let unNom = 'un nom';
-let unPrenom = 'un prénom';
-let uneVille = 'un nom de ville';
-
-const checkName = (field, item, errMsg) => {
-    let alertMsg = document.createElement('p');
-    alertContainer.appendChild(alertMsg);
-    field.addEventListener('change', (event) => {
-        if(event.target.value.match(/[A-Za-z\ë\é\è\ê\ï\à\ù\ç\ü\ä\-]+$/g)) {
-            item = event.target.value;
-            alertContainer.removeChild(alertMsg);
-            console.log(item);
-            return item;
-        } else {
-            field.value = '';
-            alertMsg.classList.add('alert', 'alert-danger');
-            alertMsg.textContent = 'Veuillez rentrer ' + errMsg + ' valide';
-            checkName(field, item, errMsg)
-        }
-    });
-    
-};
-
-const checkEmail = () => {
-    let alertMsg = document.createElement('p');
-    alertContainer.appendChild(alertMsg);
-    emailInput.addEventListener('change', (event) => {
-        if(event.target.value.match(/^[a-z0-9._%+-]{2,64}@[a-z0-9.-]{2,64}\.[a-z]{2,64}$/)) {
-            let email = event.target.value;
-            alertContainer.removeChild(alertMsg);
-            return email;
-        } else {
-            emailInput.value = ''; 
-            alertMsg.classList.add('alert', 'alert-danger');
-            alertMsg.textContent = 'Veuillez rentrer un email valide';
-            checkEmail()
-        }
-    });
-}
-
-const checkAddress = () => {
-    let alertMsg = document.createElement('p');
-    alertContainer.appendChild(alertMsg);
-    addressInput.addEventListener('change', (event) => {
-        if(event.target.value.match(/^[a-zA-Z0-9\s,'-.]*[/]{0,1}$/g)) {
-            let address = event.target.value;
-            alertContainer.removeChild(alertMsg);
-            return address;
-        } else {
-            addressInput.value = ''; 
-            alertMsg.classList.add('alert', 'alert-danger');
-            alertMsg.textContent = 'Veuillez rentrer une adresse valide';
-            checkAddress()
-        }
-    });
-}
-
-checkName(lastNameInput, lastName, unNom);
-checkName(firstNameInput, firstName, unPrenom);
-checkAddress ();
-checkName(cityInput, city, uneVille);
-checkEmail();
-
-// Création de l'objet contact
-// l’objet contact envoyé au serveur doit contenir les champs firstName,lastName,address,city, email
-class Contact {
-    constructor(firstName, lastName, address, city, email) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.address = address;
-        this.city = city;
-        this.email = email;
+    if(!inputs['city'].value.match(/[A-Za-z\ë\é\è\ê\ï\à\ù\ç\ü\ä\-]+$/g)) {
+        error = 'veuillez renseigner un nom de ville valide';
     }
-}
 
-const sendOrder = () => {
-    document.getElementById('submit').addEventListener('click', (event) => {
-        event.preventDefault();
-        if(firstNameInput.value  === '' || lastNameInput.value === '' || addressInput.value === '' || cityInput.value === '' || emailInput.value === '') {
-            alert('formulaire non complété');
-            sendOrder();
-        } else {
-            let contact = new Contact(firstNameInput.value, lastNameInput.value, addressInput.value, cityInput.value, emailInput.value);
-            console.log(contact);
-        }
-    });
-}
+    if(!inputs['address'].value.match(/^[a-zA-Z0-9\s,'-.]*[/]{0,1}$/g)) {
+        error = 'veuillez renseigner une adresse valide';
+    }
+    
+    if(inputs['email'].value.match(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/)) { 
+        error = 'veuillez renseigner un email valide';
+        console.log(inputs['email'].validity);
+    }
 
+    if(!inputs['firstName'].value.match(/[A-Za-z\ë\é\è\ê\ï\à\ù\ç\ü\ä\-]+$/g)) {
+        error = 'veuillez renseigner un prénom valide';
+    }
 
-sendOrder()
+    if(!inputs['lastName'].value.match(/[A-Za-z\ë\é\è\ê\ï\à\ù\ç\ü\ä\-]+$/g)) {
+        error = 'veuillez renseigner un nom valide';
+    }
 
+    if(error) {
+        e.preventDefault();
+        formMessage.textContent = error;
+        formMessage.classList.add('alert', 'alert-danger');
+    } else {
+        e.preventDefault(); // à supprimer pour renvoyer versla page de confirmation de commande
+        // vider le localstorage et la page actuelle 
+        formMessage.textContent = 'commande envoyée';
+    }
+});
    
 
 
