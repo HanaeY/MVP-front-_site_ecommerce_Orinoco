@@ -1,6 +1,5 @@
 /* variables globales */
 const basket = new Map(); 
-let storageContent;
 let basketBtn = document.getElementById('clear-basket');
 let displayedPrice;
 
@@ -9,36 +8,48 @@ let displayedPrice;
 //vider le panier
 basketBtn.addEventListener('click', () => {
     localStorage.removeItem('basket');
+    clearBasket()
 })
 
 /* Afficher le résumé du panier */
 
 // Récupérer le contenu du local storage (panier en cours)
-storageContent = JSON.parse(localStorage.getItem('basket'));
-console.log('contenu du local storage : ', storageContent);
+const processBasket = () => {
+    let storageContent = JSON.parse(localStorage.getItem('basket'));
+    if(storageContent != null) {
+        summarizeOrder(storageContent)
+        displayData(basket)
+        displayTotalPrice(basket)
+        basketBtn.disabled = false;
+    } else {
+        clearBasket()
+    }
+
+};
 
 // Ajouter dans la Map basket les éléments du storage en "fusionnant" les doublons 
-const summarizeOrder = () => {
-    for (let i = 0 ; i < storageContent.length ; i++) {
-        let newId = storageContent[i].id + storageContent[i].color.replace(/\s/g, '');  
-        let qty = parseInt(storageContent[i].quantity);
+const summarizeOrder = (data) => {
+    for (let i = 0 ; i < data.length ; i++) {
+        let newId = data[i].id + data[i].color.replace(/\s/g, '');  
+        let qty = parseInt(data[i].quantity);
         if(basket.has(newId)) { 
             let currentQty = parseInt(basket.get(newId).quantity); 
             currentQty += qty;
             basket.delete(newId);
-            let newItem = {id: storageContent[i].id, name: storageContent[i].name, color: storageContent[i].color, quantity: currentQty, price: storageContent[i].price};
+            let newItem = {id: data[i].id, name: data[i].name, color: data[i].color, quantity: currentQty, price: data[i].price};
             basket.set(newId, newItem);
         } else {
-            basket.set(newId, storageContent[i]);
-        }
+            basket.set(newId, data[i]);
+        }   
     }
     console.log(basket);
+    return basket
 };
 
 // Afficher les données du résumé de commande sur la page 
 
-const displayData = () => {
-    for(let item of basket.values()){
+const displayData = (data) => {
+    for(let item of data.values()){
         let newLine = document.createElement('tr');
         document.getElementById('table').appendChild(newLine);
         let name = document.createElement('td');
@@ -58,21 +69,31 @@ const displayData = () => {
 
 // Afficher le prix total 
 
-const displayTotalPrice = () => {
+const displayTotalPrice = (data) => {
     let totalPrice = 0;
-    for (let item of basket.values()) {
+    for (let item of data.values()) {
         let itemPrice = item.quantity * item.price;
         totalPrice += itemPrice;
     }
     displayedPrice = document.createElement('p');
+    displayedPrice.classList.add('total-price');
     document.getElementById('price-container').appendChild(displayedPrice);
     displayedPrice.textContent = 'Prix total à payer : ' + totalPrice + ' €';
     displayedPrice.classList.add('text-primary', 'text-center', 'border', 'border-primary');
 }
 
-summarizeOrder()
-displayData()
-displayTotalPrice()
+// Vider le panier 
+
+const clearBasket = () => {
+    document.getElementById('price-container').textContent = '';
+    document.getElementById('table').textContent = '';
+    document.getElementById('basket-info').textContent = 'Votre panier est vide';
+    basketBtn.disabled = true;
+};
+
+
+
+processBasket()
 
 /* Envoi de la commande au serveur */ 
 // les produit sont envoyés sous forme d'un tableau contenant des strings product_id 
