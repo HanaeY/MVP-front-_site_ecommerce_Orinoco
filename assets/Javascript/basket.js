@@ -3,7 +3,16 @@ const basket = new Map();
 let basketBtn = document.getElementById('clear-basket');
 let productArray = [];
 let submitBtn = document.getElementById('submit');
-//submitBtn.disabled = true;
+
+class Contact {
+    constructor(firstName, lastName, address, city, email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.city = city;
+        this.email = email;
+    }
+}
 
 /* vider le panier */
 
@@ -155,9 +164,10 @@ document.forms['order-form'].addEventListener('submit', (e) => {
         formMessage.textContent = error;
         formMessage.classList.add('alert', 'alert-danger');
     } else {
-        e.preventDefault(); // à supprimer pour renvoyer versla page de confirmation de commande
-        // vider le localstorage et la page actuelle 
+        e.preventDefault();
         formMessage.textContent = 'commande envoyée';
+        let contact = new Contact(inputs['firstName'].value, inputs['lastName'].value, inputs['address'].value, inputs['city'].value, inputs['email'].value);
+        console.log('objet contact', contact);
     }
 });
    
