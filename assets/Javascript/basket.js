@@ -1,7 +1,7 @@
 /* variables globales */
 const basket = new Map(); 
 let basketBtn = document.getElementById('clear-basket');
-let productArray = [];
+let products = [];
 let contact = {};
 let submitBtn = document.getElementById('submit');
 submitBtn.disabled = true;
@@ -101,8 +101,8 @@ const clearBasket = () => {
     document.getElementById('price-container').textContent = '';
     document.getElementById('table').textContent = '';
     document.getElementById('basket-info').textContent = 'Votre panier est vide';
-    productArray = [];
-    console.log('array quand panier vidé ', productArray);
+    products = [];
+    console.log('array quand panier vidé ', products);
     basketBtn.disabled = true;
     submitBtn.disabled = true;
 };
@@ -119,14 +119,14 @@ const buildOrderArray = () => {
             array.push(itemId);
         }
         console.log('tableau intermédiaire ', array);
-
+        
         // suppression des doublons dans le tableau 
         array.forEach((i) => {
-            if(productArray.indexOf(i) == -1) {
-                productArray.push(i);
+            if(products.indexOf(i) == -1) {
+                products.push(i);
             }
         });
-        console.log('tableau à envoyer ', productArray);
+        console.log('tableau à envoyer ', products);
         submitBtn.disabled = false;
 
     }
@@ -190,7 +190,8 @@ buildOrderArray()
     try {
         let response = await fetch('http://localhost:3000/api/teddies/order', {
             method: 'POST',
-            body: JSON.stringify(contact) + JSON.stringify(productArray),
+            headers: {'content-type': 'application/json;charset=utf-8'},
+            body: JSON.stringify({contact, products}),
         });
         if(response.ok) {
             let orderRef = await response.json();
