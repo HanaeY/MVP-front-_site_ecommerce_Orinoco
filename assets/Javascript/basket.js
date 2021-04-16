@@ -4,7 +4,6 @@ let basketBtn = document.getElementById('clear-basket');
 let products = [];
 let contact = {};
 let submitBtn = document.getElementById('submit');
-submitBtn.disabled = true;
 
 class Contact {
     constructor(firstName, lastName, address, city, email) {
@@ -104,7 +103,11 @@ const clearBasket = () => {
     products = [];
     console.log('array quand panier vidé ', products);
     basketBtn.disabled = true;
-    submitBtn.disabled = true;
+    document.getElementById('lastName').disabled = true;
+    document.getElementById('firstName').disabled = true;
+    document.getElementById('email').disabled = true;
+    document.getElementById('address').disabled = true;
+    document.getElementById('city').disabled = true;
 };
 
 // Construire le tableau à envoyer au serveur
@@ -119,7 +122,11 @@ const buildOrderArray = () => {
             }
         }
         console.log('tableau à envoyer au serveur ', products);
-        submitBtn.disabled = false;
+        document.getElementById('lastName').disabled = false;
+        document.getElementById('firstName').disabled = false;
+        document.getElementById('email').disabled = false;
+        document.getElementById('address').disabled = false;
+        document.getElementById('city').disabled = false;
     }
 };
 
@@ -225,6 +232,14 @@ processBasket()
  ///
    
 sendOrder()
+
+/*
+    document.getElementById('lastName').disabled = true;
+    document.getElementById('firstName').disabled = true;
+    document.getElementById('email').disabled = true;
+    document.getElementById('address').disabled = true;
+    document.getElementById('city').disabled = true;
+    */
 
 
 
