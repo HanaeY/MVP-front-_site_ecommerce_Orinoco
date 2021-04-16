@@ -33,7 +33,7 @@ const processBasket = () => {
         summarizeOrder(storageContent)
         displayData(basket)
         displayTotalPrice(basket)
-        basketBtn.disabled = false;
+        buildOrderArray()
     } else {
         clearBasket()
     }
@@ -107,8 +107,7 @@ const clearBasket = () => {
     submitBtn.disabled = true;
 };
 
-/* Tableau de produits à envoyer au serveur */
-// les produit sont envoyés sous forme d'un tableau contenant des strings product_id 
+// Construire le tableau à envoyer au serveur
 
 const buildOrderArray = () => {
     if(basket != null) {
@@ -151,13 +150,10 @@ const buildOrderArray = () => {
 /// 
 
 processBasket()
-buildOrderArray()
 
 /* Envoi de la commande */
 
-// Validation des données du formulaire 
-
- const checkformInputs = () => {
+ const sendOrder = () => {
     document.forms['order-form'].addEventListener('submit', (e) => {
         let error;
         let inputs = this;
@@ -190,17 +186,17 @@ buildOrderArray()
             formMessage.classList.add('alert', 'alert-danger');
         } else {
             e.preventDefault();
-            formMessage.textContent = 'commande envoyée';
+            //formMessage.textContent = 'commande envoyée';
             contact = new Contact(inputs['firstName'].value, inputs['lastName'].value, inputs['address'].value, inputs['city'].value, inputs['email'].value);
             console.log('objet contact', contact);
-            send()
+            post()
         }
     });
  };
 
- // Envoi au serveur 
+ // Envoi de la commmande au serveur 
 
- const send = async () => {
+ const post = async () => {
     try {
         let response = await fetch('http://localhost:3000/api/teddies/order', {
             method: 'POST',
@@ -208,8 +204,10 @@ buildOrderArray()
             body: JSON.stringify({contact, products}),
         });
         if(response.ok) {
-            let orderRef = await response.json();
-            console.log('ref de la commande', orderRef);
+            let orderConfirmation = await response.json();
+            console.log('ref de la commande', orderConfirmation);
+            confirmation(orderConfirmation);
+
         } else {
             console.log('retour du serveur ', response);
         }
@@ -218,9 +216,15 @@ buildOrderArray()
     }
  };
 
+ // Renvoi vers la page confirmation de commande
+
+ const confirmation = (data) => {
+    localStorage.setItem('orderConfirmation', JSON.stringify(data));
+ };
+
  ///
    
- checkformInputs()
+sendOrder()
 
 
 
