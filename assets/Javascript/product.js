@@ -106,14 +106,14 @@ const addToBasket = (data) => {
 
         //message d'info
         document.getElementById('info').classList.add('alert', 'alert-success');
-        document.getElementById('info').textContent = 'Vous avez ajouté · produit(s) à votre panier';
+        document.getElementById('info').textContent = 'Vous avez ajouté . produit(s) à votre panier';
         setTimeout(() => {
             if(item.quantity == 1) {
                 document.getElementById('info').textContent = 'Vous avez ajouté ' + item.quantity + ' produit(s) à votre panier';
             } else {
                 document.getElementById('info').textContent = 'Vous avez ajouté ' + item.quantity + ' produit(s) à votre panier';
             }
-        }, 100);
+        }, 200);
         
     });
 };

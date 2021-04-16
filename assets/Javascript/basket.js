@@ -76,7 +76,7 @@ const displayData = (data) => {
         name.textContent = item.name;
         color.textContent = item.color;
         quantity.textContent = item.quantity;
-        price.textContent = item.price;
+        price.textContent = item.price + ' €';
     }
 };
 
