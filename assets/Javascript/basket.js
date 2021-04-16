@@ -112,6 +112,21 @@ const clearBasket = () => {
 
 const buildOrderArray = () => {
     if(basket != null) {
+        for(let item of basket.values()) {
+            let itemId = item.id;
+            let itemQuantity = parseInt(item.quantity);
+            for(let i = 0 ; i < itemQuantity ; i++) {
+                products.push(itemId);
+            }
+        }
+        console.log('tableau à envoyer au serveur ', products);
+        submitBtn.disabled = false;
+    }
+};
+
+/*
+const buildOrderArray = () => {
+    if(basket != null) {
         //insertion des id de la map dans un tableau 
         let array = [];
         for(let item of basket.values()) {
@@ -131,6 +146,7 @@ const buildOrderArray = () => {
 
     }
 };
+*/
 
 /// 
 
@@ -178,8 +194,6 @@ buildOrderArray()
             contact = new Contact(inputs['firstName'].value, inputs['lastName'].value, inputs['address'].value, inputs['city'].value, inputs['email'].value);
             console.log('objet contact', contact);
             send()
-            
-            
         }
     });
  };
