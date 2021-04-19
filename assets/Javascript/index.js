@@ -10,9 +10,11 @@ const getTeddies = async () => {
             displayTeddies(teddies)
         } else {
             console.error('retour du serveur : ', response);
+            alert('oups, une erreur serveur a été rencontrée (statut ' + response.status + ')');
         }
     } catch(err) {
         console.log('erreur', err);
+        alert('oups, une erreur est survenue, veuillez nous contacter si cela persiste');
     }
 };
 
