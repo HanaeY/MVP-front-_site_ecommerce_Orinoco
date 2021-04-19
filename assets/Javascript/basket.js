@@ -110,6 +110,7 @@ const clearBasket = () => {
     document.getElementById('email').disabled = true;
     document.getElementById('address').disabled = true;
     document.getElementById('city').disabled = true;
+    document.getElementById('submit').disabled = true;
 };
 
 // Construire le tableau produit à envoyer au serveur
@@ -129,6 +130,7 @@ const buildOrderArray = () => {
         document.getElementById('email').disabled = false;
         document.getElementById('address').disabled = false;
         document.getElementById('city').disabled = false;
+        document.getElementById('submit').disabled = false;
     }
 };
 
