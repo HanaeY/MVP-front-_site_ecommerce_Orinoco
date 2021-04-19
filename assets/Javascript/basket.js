@@ -227,6 +227,9 @@ processBasket()
 
  const confirmation = (data) => {
     localStorage.setItem('orderConfirmation', JSON.stringify(data));
+    localStorage.removeItem('basket');
+    clearBasket()
+    window.location.replace('confirmation.html');
  };
 
  ///
@@ -240,6 +243,7 @@ sendOrder()
     document.getElementById('address').disabled = true;
     document.getElementById('city').disabled = true;
     */
+
 
 
 
