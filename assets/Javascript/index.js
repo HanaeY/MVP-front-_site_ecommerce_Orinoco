@@ -1,11 +1,12 @@
-/* AFFICHER LES TEDDIES SUR LA PAGE INDEX */
+/* Affichage des teddies sur la page index */
 
 // Appel de l'API pour récupérer les données des teddies 
+
 const getTeddies = async () => {
     try {
-        var response = await fetch('http://localhost:3000/api/teddies');
+        const response = await fetch('http://localhost:3000/api/teddies');
         if(response.ok) {
-            var teddies = await response.json(); // la méthode .json retourne une promesse 
+            let teddies = await response.json();
             displayTeddies(teddies)
         } else {
             console.error('retour du serveur : ', response);
@@ -13,9 +14,10 @@ const getTeddies = async () => {
     } catch(err) {
         console.log('erreur', err);
     }
-}
+};
 
 // Modification du DOM pour insérer les données des teddies sur la page 
+
 const displayTeddies = (data) => {
     for(let i = 0 ; i < data.length ; i++) {
         // création d'un produit teddy dans le bloc produits de la page 
@@ -49,6 +51,8 @@ const displayTeddies = (data) => {
         price.textContent = data[i].price / 100 + " €";
         button.textContent = 'Voir le produit';
     }
-}
+};
+
+// appel de la fonction 
 
 getTeddies()

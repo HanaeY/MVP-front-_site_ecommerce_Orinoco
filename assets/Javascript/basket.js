@@ -1,4 +1,5 @@
-/* variables globales */
+// variables principales
+
 const basket = new Map(); 
 let basketBtn = document.getElementById('clear-basket');
 let products = [];
@@ -17,15 +18,15 @@ class Contact {
 
 /* vider le panier */
 
-//vider le panier
 basketBtn.addEventListener('click', () => {
     localStorage.removeItem('basket');
     clearBasket()
 })
 
-/* Afficher le résumé du panier */
+/* Afficher le résumé du panier/vider le tableau résumé */
 
-// Récupérer le contenu du local storage (panier en cours)
+// Récupérer le contenu du local storage
+
 const processBasket = () => {
     let storageContent = JSON.parse(localStorage.getItem('basket'));
     if(storageContent != null) {
@@ -40,6 +41,7 @@ const processBasket = () => {
 };
 
 // Ajouter dans la Map basket les éléments du storage en "fusionnant" les doublons 
+
 const summarizeOrder = (data) => {
     for (let i = 0 ; i < data.length ; i++) {
         let newId = data[i].id + data[i].color.replace(/\s/g, '');  
@@ -94,7 +96,7 @@ const displayTotalPrice = (data) => {
     displayedPrice.classList.add('text-primary', 'text-center', 'border', 'border-primary');
 };
 
-// Vider le panier 
+// Vider le résumé du panier 
 
 const clearBasket = () => {
     document.getElementById('price-container').textContent = '';
@@ -110,7 +112,7 @@ const clearBasket = () => {
     document.getElementById('city').disabled = true;
 };
 
-// Construire le tableau à envoyer au serveur
+// Construire le tableau produit à envoyer au serveur
 
 const buildOrderArray = () => {
     if(basket != null) {
@@ -130,31 +132,7 @@ const buildOrderArray = () => {
     }
 };
 
-/*
-const buildOrderArray = () => {
-    if(basket != null) {
-        //insertion des id de la map dans un tableau 
-        let array = [];
-        for(let item of basket.values()) {
-            let itemId = item.id;
-            array.push(itemId);
-        }
-        console.log('tableau intermédiaire ', array);
-        
-        // suppression des doublons dans le tableau 
-        array.forEach((i) => {
-            if(products.indexOf(i) == -1) {
-                products.push(i);
-            }
-        });
-        console.log('tableau à envoyer ', products);
-        submitBtn.disabled = false;
-
-    }
-};
-*/
-
-/// 
+// Appel de la fonction de récupération/affichage des données du panier 
 
 processBasket()
 
@@ -165,6 +143,8 @@ processBasket()
         let error;
         let inputs = this;
         let formMessage = document.getElementById('input-alert');
+
+        //validation des données saisies 
     
         if(!inputs['city'].value.match(/[A-Za-z\ë\é\è\ê\ï\à\ù\ç\ü\ä\-]+$/g)) {
             error = 'veuillez renseigner un nom de ville valide';
@@ -193,7 +173,6 @@ processBasket()
             formMessage.classList.add('alert', 'alert-danger');
         } else {
             e.preventDefault();
-            //formMessage.textContent = 'commande envoyée';
             contact = new Contact(inputs['firstName'].value, inputs['lastName'].value, inputs['address'].value, inputs['city'].value, inputs['email'].value);
             console.log('objet contact', contact);
             post()
@@ -232,17 +211,9 @@ processBasket()
     window.location.replace('confirmation.html');
  };
 
- ///
+ /// Appel de la fonction d'envoi de la commande 
    
 sendOrder()
-
-/*
-    document.getElementById('lastName').disabled = true;
-    document.getElementById('firstName').disabled = true;
-    document.getElementById('email').disabled = true;
-    document.getElementById('address').disabled = true;
-    document.getElementById('city').disabled = true;
-    */
 
 
 
