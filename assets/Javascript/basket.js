@@ -32,7 +32,6 @@ const processBasket = () => {
     if(storageContent != null) {
         summarizeOrder(storageContent)
         displayData(basket)
-        displayTotalPrice(basket)
         buildOrderArray()
     } else {
         clearBasket()
@@ -63,6 +62,7 @@ const summarizeOrder = (data) => {
 // Afficher les données du résumé de commande sur la page 
 
 const displayData = (data) => {
+    let totalPrice = 0;
     for(let item of data.values()){
         let newLine = document.createElement('tr');
         document.getElementById('table').appendChild(newLine);
@@ -78,25 +78,16 @@ const displayData = (data) => {
         color.textContent = item.color;
         quantity.textContent = item.quantity;
         price.textContent = item.price * item.quantity + ' €';
-    }
-};
 
-// Afficher le prix total 
-
-const displayTotalPrice = (data) => {
-    let totalPrice = 0;
-    for (let item of data.values()) {
         let itemPrice = item.quantity * item.price;
         totalPrice += itemPrice;
     }
-    //afficher le prix total
     let displayedPrice = document.createElement('p');
     displayedPrice.classList.add('total-price');
     document.getElementById('price-container').appendChild(displayedPrice);
     displayedPrice.textContent = 'Prix total à payer : ' + totalPrice + ' €';
     displayedPrice.classList.add('text-primary', 'text-center', 'border', 'border-primary');
 };
-
 
 // Vider le résumé du panier 
 
