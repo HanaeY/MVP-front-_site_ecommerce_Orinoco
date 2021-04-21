@@ -3,7 +3,6 @@
 
 // variables principales 
 let teddyId;
-let selectedColor;
 let quantity = document.getElementById('selected-teddy-quantity').value;
 let basket;
 
@@ -33,7 +32,6 @@ const getTeddyData = async () => {
         if(response.ok) {
             var teddyData = await response.json();
             displayTeddyData(teddyData);
-            selectColor(teddyData);
             updatePrice(teddyData);
             addToBasket(teddyData);
         } else {
@@ -64,16 +62,6 @@ const displayTeddyData = (data) => {
     }
 };
 
-// Mettre la couleur à jour en fonction de la valeur choisie 
-
-const selectColor = (data) => {
-    selectedColor = data.colors[0];
-    document.getElementById('selected-teddy-colors').addEventListener('input', (event) => {
-        selectedColor = event.target.value; 
-    });
-    return selectedColor; 
-};
-
 // Mettre le prix à jour en fonction de la quantité saisie 
 
 const updatePrice = (data) => {
@@ -87,10 +75,23 @@ const updatePrice = (data) => {
 
 // Ajouter le·s produit·s dans le localstorage 
 
+const returnInfo = (data) => {
+    let info = document.createElement('div');
+    document.getElementById('info').appendChild(info);
+    info.classList.add('alert', 'alert-success');
+
+    if(data == 1) {
+        info.textContent = 'Vous avez ajouté 1 produit à votre panier';
+    } else {
+        info.textContent = 'Vous avez ajouté ' + data + ' produits à votre panier';
+    }
+};
+
 const addToBasket = (data) => {
     document.getElementById('add-to-basket').addEventListener('click', (e) => {
         e.preventDefault();
-        let item = new BasketItem(teddyId, data.name, selectedColor, quantity, data.price);
+        let color = document.getElementById('selected-teddy-colors').value;
+        let item = new BasketItem(teddyId, data.name, color, quantity, data.price);
         console.log('item', item);
         //récupérer le contenu du local storage
         basket = JSON.parse(localStorage.getItem('basket'));
@@ -103,18 +104,7 @@ const addToBasket = (data) => {
         //remettre le panier sur le local storage
         localStorage.setItem('basket', JSON.stringify(basket)); // le localstorage est un tableau d'objets (id, couleur, qté)
 
-        //message d'info
-        
-        let info = document.createElement('div');
-        document.getElementById('info').appendChild(info);
-        info.classList.add('alert', 'alert-success');
-
-        if(item.quantity == 1) {
-            info.textContent = 'Vous avez ajouté 1 produit à votre panier';
-        } else {
-            info.textContent = 'Vous avez ajouté ' + item.quantity + ' produits à votre panier';
-        }
-        
+        returnInfo(quantity);
     });
 };
 

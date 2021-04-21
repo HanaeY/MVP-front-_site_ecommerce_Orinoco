@@ -68,20 +68,71 @@ const displayData = (data) => {
         document.getElementById('table').appendChild(newLine);
         let name = document.createElement('td');
         let color = document.createElement('td');
-        let quantity = document.createElement('td');
+        let quantityBox = document.createElement('td');
+        let quantity = document.createElement('select');
+        quantity.classList.add('quantity');
+        let zero = document.createElement('option');
+        let one = document.createElement('option');
+        let two = document.createElement('option');
+        let three = document.createElement('option');
+        let four = document.createElement('option');
+        let five = document.createElement('option');
+        let six = document.createElement('option');
+        let seven = document.createElement('option');
+        let eight = document.createElement('option');
+        let nine = document.createElement('option');
+        let ten = document.createElement('option');
         let price = document.createElement('td');
+        zero.value = 0;
+        zero.textContent = 0;
+        one.value = 1;
+        one.textContent = 1;
+        two.value = 2;
+        two.textContent = 2;
+        three.value = 3;
+        three.textContent = 3;
+        four.value = 4;
+        four.textContent = 4;
+        five.value = 5;
+        five.textContent = 5;
+        six.value = 6;
+        six.textContent = 6;
+        seven.value = 7;
+        seven.textContent = 7;
+        eight.value = 8;
+        eight.textContent = 8;
+        nine.value = 9;
+        nine.textContent = 9;
+        ten.value = 10;
+        ten.textContent = 10;
         newLine.appendChild(name);
         newLine.appendChild(color);
-        newLine.appendChild(quantity);
+        newLine.appendChild(quantityBox);
+        quantityBox.appendChild(quantity);
+        quantity.appendChild(zero);
+        quantity.appendChild(one);
+        quantity.appendChild(two);
+        quantity.appendChild(three);
+        quantity.appendChild(four);
+        quantity.appendChild(five);
+        quantity.appendChild(six);
+        quantity.appendChild(seven);
+        quantity.appendChild(eight);
+        quantity.appendChild(nine);
+        quantity.appendChild(ten);
         newLine.appendChild(price);
         name.textContent = item.name;
         color.textContent = item.color;
-        quantity.textContent = item.quantity;
-        price.textContent = item.price + ' €';
+        quantity.value = item.quantity;
+        price.textContent = item.price * quantity.value + ' €';
     }
 };
 
 // Afficher le prix total 
+
+// prix total v2
+
+// prix total V1
 
 const displayTotalPrice = (data) => {
     let totalPrice = 0;
@@ -89,12 +140,14 @@ const displayTotalPrice = (data) => {
         let itemPrice = item.quantity * item.price;
         totalPrice += itemPrice;
     }
+    //afficher le prix total
     let displayedPrice = document.createElement('p');
     displayedPrice.classList.add('total-price');
     document.getElementById('price-container').appendChild(displayedPrice);
     displayedPrice.textContent = 'Prix total à payer : ' + totalPrice + ' €';
     displayedPrice.classList.add('text-primary', 'text-center', 'border', 'border-primary');
 };
+
 
 // Vider le résumé du panier 
 
