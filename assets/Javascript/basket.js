@@ -16,27 +16,24 @@ class Contact {
     }
 }
 
-/* vider le panier */
+/* Afficher le panier */
 
-basketBtn.addEventListener('click', () => {
-    localStorage.removeItem('basket');
-    clearBasket()
-})
+// désactiver le formulaire de contact
 
-/* Afficher le résumé du panier/vider le tableau résumé */
+const disableForm = (data) => {
+    document.getElementById('lastName').disabled = data;
+    document.getElementById('firstName').disabled = data;
+    document.getElementById('email').disabled = data;
+    document.getElementById('address').disabled = data;
+    document.getElementById('city').disabled = data;
+    document.getElementById('submit').disabled = data;
+}
 
 // Récupérer le contenu du local storage
+//test
 
-const processBasket = () => {
-    let storageContent = JSON.parse(localStorage.getItem('basket'));
-    if(storageContent != null) {
-        summarizeOrder(storageContent)
-        displayData(basket)
-        buildOrderArray()
-    } else {
-        clearBasket()
-    }
-
+const getStorageData = () => {
+    return JSON.parse(localStorage.getItem('basket'));
 };
 
 // Ajouter dans la Map basket les éléments du storage en "fusionnant" les doublons 
@@ -89,23 +86,6 @@ const displayData = (data) => {
     displayedPrice.classList.add('text-primary', 'text-center', 'border', 'border-primary');
 };
 
-// Vider le résumé du panier 
-
-const clearBasket = () => {
-    document.getElementById('price-container').textContent = '';
-    document.getElementById('table').textContent = '';
-    document.getElementById('basket-info').textContent = 'Votre panier est vide';
-    products = [];
-    console.log('array quand panier vidé ', products);
-    basketBtn.disabled = true;
-    document.getElementById('lastName').disabled = true;
-    document.getElementById('firstName').disabled = true;
-    document.getElementById('email').disabled = true;
-    document.getElementById('address').disabled = true;
-    document.getElementById('city').disabled = true;
-    document.getElementById('submit').disabled = true;
-};
-
 // Construire le tableau produit à envoyer au serveur
 
 const buildOrderArray = () => {
@@ -118,28 +98,60 @@ const buildOrderArray = () => {
             }
         }
         console.log('tableau à envoyer au serveur ', products);
-        document.getElementById('lastName').disabled = false;
-        document.getElementById('firstName').disabled = false;
-        document.getElementById('email').disabled = false;
-        document.getElementById('address').disabled = false;
-        document.getElementById('city').disabled = false;
-        document.getElementById('submit').disabled = false;
+        
+        disableForm(false);
     }
 };
 
 // Appel de la fonction de récupération/affichage des données du panier 
 
+const processBasket = () => {
+    let storageContent = getStorageData();
+    if(storageContent != null) {
+        summarizeOrder(storageContent)
+        displayData(basket)
+        buildOrderArray()
+    } else {
+        disableForm(true);
+        document.getElementById('basket-info').textContent = 'Votre panier est vide';
+        basketBtn.disabled = true;
+    }
+
+};
+
 processBasket()
+
+/* vider le panier */
+
+// Vider le résumé du panier 
+
+const clearBasketSummary = () => {
+    document.getElementById('price-container').textContent = '';
+    document.getElementById('table').textContent = '';
+    document.getElementById('basket-info').textContent = 'Votre panier est vide';
+};
+
+// Vider le panier 
+
+const clearBasket = () => {
+    localStorage.removeItem('basket');
+    products = [];
+    clearBasketSummary();
+    disableForm(true);
+    basketBtn.disabled = true;
+};
+
+basketBtn.addEventListener('click', clearBasket);
 
 /* Envoi de la commande */
 
- const sendOrder = () => {
+ const submit = () => {
     document.forms['order-form'].addEventListener('submit', (e) => {
         let error;
         let inputs = this;
         let formMessage = document.getElementById('input-alert');
 
-        //validation des données saisies 
+        //validation des données saisies
     
         if(!inputs['city'].value.match(/[A-Za-z\ë\é\è\ê\ï\à\ù\ç\ü\ä\-]+$/g)) {
             error = 'veuillez renseigner un nom de ville valide';
@@ -203,14 +215,13 @@ processBasket()
 
  const confirmation = (data) => {
     localStorage.setItem('orderConfirmation', JSON.stringify(data));
-    localStorage.removeItem('basket');
     clearBasket()
     window.location.replace('confirmation.html');
  };
 
  /// Appel de la fonction d'envoi de la commande 
    
-sendOrder()
+ submit()
 
 
 
