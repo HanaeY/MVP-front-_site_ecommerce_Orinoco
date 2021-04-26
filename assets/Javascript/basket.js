@@ -1,6 +1,6 @@
 // variables principales
 
-const basket = new Map(); 
+let basket;
 let basketBtn = document.getElementById('clear-basket');
 let products = [];
 let contact = {};
@@ -30,31 +30,15 @@ const disableForm = (data) => {
 }
 
 // Récupérer le contenu du local storage
-//test
 
 const getStorageData = () => {
-    return JSON.parse(localStorage.getItem('basket'));
+    let basketArray = JSON.parse(localStorage.getItem('basket'));
+    basket = new Map(basketArray);
+    return basket;
+
 };
 
-// Ajouter dans la Map basket les éléments du storage en "fusionnant" les doublons 
-
-const summarizeOrder = (data) => {
-    for (let i = 0 ; i < data.length ; i++) {
-        let newId = data[i].id + data[i].color.replace(/\s/g, '');  
-        let qty = parseInt(data[i].quantity);
-        if(basket.has(newId)) { 
-            let currentQty = parseInt(basket.get(newId).quantity); 
-            currentQty += qty;
-            basket.delete(newId);
-            let newItem = {id: data[i].id, name: data[i].name, color: data[i].color, quantity: currentQty, price: data[i].price};
-            basket.set(newId, newItem);
-        } else {
-            basket.set(newId, data[i]);
-        }   
-    }
-    console.log(basket);
-    return basket
-};
+console.log(getStorageData());
 
 // Afficher les données du résumé de commande sur la page 
 
@@ -211,9 +195,8 @@ const buildOrderArray = (data) => {
 // Appel de la fonction de récupération/affichage des données du panier 
 
 const processBasket = () => {
-    let storageContent = getStorageData();
-    if(storageContent != null) {
-        summarizeOrder(storageContent)
+    basket = getStorageData();
+    if(basket != null) {
         displayData(basket)
         displayTotalPrice(basket)
         buildOrderArray(basket)
