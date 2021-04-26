@@ -35,11 +35,9 @@ const getTeddyData = async () => {
             updatePrice(teddyData);
             addToBasket(teddyData);
         } else {
-            console.log('Erreur. Réponse du serveur : ', response);
             alert('oups, une erreur serveur a été rencontrée (statut ' + response.status + ')');
         }
     } catch(err) {
-        console.log('erreur : ', err);
         alert('oups, une erreur est survenue, veuillez nous contacter si cela persiste');
     }
 };
@@ -95,19 +93,15 @@ const addToBasket = (data) => {
         let color = document.getElementById('selected-teddy-colors').value;
         let item = new BasketItem(teddyId, data.name, color, quantity, data.price);
         let key = teddyId + color.replace(/\s/g, '');
-        console.log('item to add ', item);
-        console.log('key to add ', key);
 
         // récupérer le contenu du local storage
         basketArray = JSON.parse(localStorage.getItem('basket'));
-        console.log('basket to change ', basket);
 
         if(basketArray == null) {
             basket = new Map();
         } else {
             // reconvertir le tableau en map
             basket = new Map(basketArray);
-            console.log('basket array to map ', basket);
         }
 
         if(basket.has(key)) {
@@ -116,11 +110,9 @@ const addToBasket = (data) => {
             item = new BasketItem(teddyId, data.name, color, newQuantity, data.price);
             basket.delete(key);
             basket.set(key, item);
-            console.log('item changed', item)
         } else {
             basket.set(key,item);
         }
-        console.log('array from map', JSON.stringify(Array.from(basket)));
         localStorage.setItem('basket', JSON.stringify(Array.from(basket)));
 
         returnInfo(quantity);

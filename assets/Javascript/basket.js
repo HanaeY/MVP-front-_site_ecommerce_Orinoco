@@ -180,7 +180,7 @@ const buildOrderArray = (data) => {
                 products.push(itemId);
             }
         }
-        console.log('tableau à envoyer au serveur ', products);
+
         disableForm(false);
     }
 };
@@ -261,7 +261,7 @@ basketBtn.addEventListener('click', clearBasket);
         } else {
             e.preventDefault();
             contact = new Contact(inputs['firstName'].value, inputs['lastName'].value, inputs['address'].value, inputs['city'].value, inputs['email'].value);
-            console.log('objet contact', contact);
+
             post()
         }
     });

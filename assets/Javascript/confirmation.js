@@ -1,7 +1,7 @@
 // récupérer les données stockées sur le local storage
 
 let confirmation = JSON.parse(localStorage.getItem('orderConfirmation'));
-console.log(confirmation);
+
 let price = 0;
 
 // afficher l'identifiant de la commande 
