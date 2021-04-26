@@ -148,7 +148,12 @@ const displayData = (data) => {
             // modifier le tableau products
             products = [];
             buildOrderArray(data);
-
+            console.log(products);
+            
+            // désactiver le formulaire si le panier est vidé 
+            if(products.length == 0) {
+                clearBasket();
+            }
         });
     }
 };

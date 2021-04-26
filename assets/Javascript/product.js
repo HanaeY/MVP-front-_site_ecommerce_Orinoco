@@ -122,6 +122,8 @@ const addToBasket = (data) => {
         }
         console.log('array from map', JSON.stringify(Array.from(basket)));
         localStorage.setItem('basket', JSON.stringify(Array.from(basket)));
+
+        returnInfo(quantity);
     });
 };
 
