@@ -122,27 +122,22 @@ const displayData = (data) => {
         newLine.appendChild(price);
         price.textContent = item.price * item.quantity + ' €';
 
-        /*
-        let itemPrice = item.quantity * item.price;
-        totalPrice += itemPrice;
-        */
-
         // écoute du changement de quantité d'un produit
         quantity.addEventListener('input', (event) => {
-            let newQuanity = event.target.value;
-            item.quantity = newQuanity;
+            let newQuantity = event.target.value;
+            item.quantity = newQuantity;
             console.log(item.quantity);
 
-            // changer la valeur dans le local storage 
-            let localStorage = getStorageData();
-            console.log('local storage après modif de qté', localStorage);
-
-            // changer la valeur dans la map
+            // changer la valeur dans le panier actuel
             let newObject = {id: item.id, name: item.name, color: item.color, quantity: item.quantity, price: item.price};
             let newKey = item.id + item.color.replace(/\s/g, '');
             basket.delete(newKey);
             basket.set(newKey, newObject);
             console.log(basket);
+
+            // modifier le local storage
+            localStorage.setItem('basket', JSON.stringify(Array.from(basket)));
+            console.log('local storage après modif de qté', localStorage);
 
             // changer prix de la ligne 
             price.textContent = item.price * item.quantity + ' €';
