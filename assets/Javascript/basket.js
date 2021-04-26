@@ -27,7 +27,7 @@ const disableForm = (data) => {
     document.getElementById('address').disabled = data;
     document.getElementById('city').disabled = data;
     document.getElementById('submit').disabled = data;
-}
+};
 
 // Récupérer le contenu du local storage
 
@@ -35,10 +35,7 @@ const getStorageData = () => {
     let basketArray = JSON.parse(localStorage.getItem('basket'));
     basket = new Map(basketArray);
     return basket;
-
 };
-
-console.log(getStorageData());
 
 // Afficher les données du résumé de commande sur la page 
 
@@ -126,18 +123,15 @@ const displayData = (data) => {
         quantity.addEventListener('input', (event) => {
             let newQuantity = event.target.value;
             item.quantity = newQuantity;
-            console.log(item.quantity);
 
             // changer la valeur dans le panier actuel
             let newObject = {id: item.id, name: item.name, color: item.color, quantity: item.quantity, price: item.price};
             let newKey = item.id + item.color.replace(/\s/g, '');
             basket.delete(newKey);
             basket.set(newKey, newObject);
-            console.log(basket);
 
             // modifier le local storage
             localStorage.setItem('basket', JSON.stringify(Array.from(basket)));
-            console.log('local storage après modif de qté', localStorage);
 
             // changer prix de la ligne 
             price.textContent = item.price * item.quantity + ' €';
@@ -148,7 +142,6 @@ const displayData = (data) => {
             // modifier le tableau products
             products = [];
             buildOrderArray(data);
-            console.log(products);
             
             // désactiver le formulaire si le panier est vidé 
             if(products.length == 0) {
@@ -164,11 +157,12 @@ const displayTotalPrice = (data) => {
         let itemPrice = item.quantity * item.price;
         totalPrice += itemPrice;
     }
-    //afficher le prix total
+    // créer l'élément prix 
     if(document.getElementById('total-price') == null) {
         let displayedPrice = document.createElement('p');
         displayedPrice.setAttribute('id', 'total-price');
-        displayedPrice.classList.add('text-primary', 'text-center', 'border', 'border-primary');
+        displayedPrice.classList.add('text-primary', 'text-center', 'border', 'border-primary', 'container');
+        displayedPrice.style.maxWidth = '300px';
         document.getElementById('price-container').appendChild(displayedPrice);
     }
 
@@ -187,7 +181,6 @@ const buildOrderArray = (data) => {
             }
         }
         console.log('tableau à envoyer au serveur ', products);
-        
         disableForm(false);
     }
 };
@@ -205,7 +198,6 @@ const processBasket = () => {
         document.getElementById('basket-info').textContent = 'Votre panier est vide';
         basketBtn.disabled = true;
     }
-
 };
 
 processBasket()
@@ -252,7 +244,6 @@ basketBtn.addEventListener('click', clearBasket);
         
         if(inputs['email'].value.match(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/)) { 
             error = 'veuillez renseigner un email valide';
-            console.log(inputs['email'].validity);
         }
     
         if(!inputs['firstName'].value.match(/[A-Za-z\ë\é\è\ê\ï\à\ù\ç\ü\ä\-]+$/g)) {
@@ -287,15 +278,12 @@ basketBtn.addEventListener('click', clearBasket);
         });
         if(response.ok) {
             let orderConfirmation = await response.json();
-            console.log('ref de la commande', orderConfirmation);
             confirmation(orderConfirmation);
 
         } else {
-            console.log('retour du serveur ', response);
             alert('oups, une erreur serveur a été rencontrée (statut ' + response.status + ')');
         }
     } catch(err) {
-        console.log('erreur ', err);
         alert('oups, une erreur est survenue, veuillez nous contacter si cela persiste');
     }
  };
