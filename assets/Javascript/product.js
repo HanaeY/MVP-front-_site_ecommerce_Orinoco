@@ -3,7 +3,7 @@
 
 // variables principales 
 let teddyId;
-let quantity = document.getElementById('selected-teddy-quantity').value;
+let quantity = parseInt(document.getElementById('selected-teddy-quantity').value);
 let basket;
 
 class BasketItem {
@@ -88,23 +88,40 @@ const returnInfo = (data) => {
 };
 
 const addToBasket = (data) => {
-    document.getElementById('add-to-basket').addEventListener('click', (e) => {
-        e.preventDefault();
+    document.getElementById('add-to-basket').addEventListener('click', (event) => {
+        event.preventDefault();
+
+        // élément à ajouter au local storage
         let color = document.getElementById('selected-teddy-colors').value;
         let item = new BasketItem(teddyId, data.name, color, quantity, data.price);
-        console.log('item', item);
-        //récupérer le contenu du local storage
-        basket = JSON.parse(localStorage.getItem('basket'));
-        if(basket == null) {
-            basket = [];
-        }
-        //ajouter le nouvel item dans le panier
-        basket.push(item);
-        console.log('basket', basket); // 
-        //remettre le panier sur le local storage
-        localStorage.setItem('basket', JSON.stringify(basket)); // le localstorage est un tableau d'objets (id, couleur, qté)
+        let key = teddyId + color.replace(/\s/g, '');
+        console.log('item to add ', item);
+        console.log('key to add ', key);
 
-        returnInfo(quantity);
+        // récupérer le contenu du local storage
+        basketArray = JSON.parse(localStorage.getItem('basket'));
+        console.log('basket to change ', basket);
+
+        if(basketArray == null) {
+            basket = new Map();
+        } else {
+            // reconvertir le tableau en map
+            basket = new Map(basketArray);
+            console.log('basket array to map ', basket);
+        }
+
+        if(basket.has(key)) {
+            let storedQuantity = parseInt(basket.get(key).quantity); 
+            newQuantity = quantity + storedQuantity;
+            item = new BasketItem(teddyId, data.name, color, newQuantity, data.price);
+            basket.delete(key);
+            basket.set(key, item);
+            console.log('item changed', item)
+        } else {
+            basket.set(key,item);
+        }
+        console.log('array from map', JSON.stringify(Array.from(basket)));
+        localStorage.setItem('basket', JSON.stringify(Array.from(basket)));
     });
 };
 

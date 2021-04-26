@@ -63,34 +63,139 @@ const displayData = (data) => {
     for(let item of data.values()){
         let newLine = document.createElement('tr');
         document.getElementById('table').appendChild(newLine);
+
         let name = document.createElement('td');
-        let color = document.createElement('td');
-        let quantity = document.createElement('td');
-        let price = document.createElement('td');
         newLine.appendChild(name);
-        newLine.appendChild(color);
-        newLine.appendChild(quantity);
-        newLine.appendChild(price);
         name.textContent = item.name;
+
+        let color = document.createElement('td');
+        newLine.appendChild(color);
         color.textContent = item.color;
-        quantity.textContent = item.quantity;
+
+        let quantityBox = document.createElement('td');
+        newLine.appendChild(quantityBox);
+        let quantity = document.createElement('select');
+        quantityBox.appendChild(quantity);
+
+        let optionZero = document.createElement('option');
+        optionZero.value = 0;
+        optionZero.textContent = '0';
+        quantity.appendChild(optionZero);
+
+        let optionOne = document.createElement('option');
+        optionOne.value = 1;
+        optionOne.textContent = '1';
+        quantity.appendChild(optionOne);
+
+        let optionTwo = document.createElement('option');
+        optionTwo.value = 2;
+        optionTwo.textContent = '2';
+        quantity.appendChild(optionTwo);
+
+        let optionThree = document.createElement('option');
+        optionThree.value = 3;
+        optionThree.textContent = '3';
+        quantity.appendChild(optionThree);
+
+        let optionFour = document.createElement('option');
+        optionFour.value = 4;
+        optionFour.textContent = '4';
+        quantity.appendChild(optionFour);
+
+        let optionFive = document.createElement('option');
+        optionFive.value = 5;
+        optionFive.textContent = '5';
+        quantity.appendChild(optionFive);
+
+        let optionSix = document.createElement('option');
+        optionSix.value = 6;
+        optionSix.textContent = '6';
+        quantity.appendChild(optionSix);
+
+        let optionSeven = document.createElement('option');
+        optionSeven.value = 7;
+        optionSeven.textContent = '7';
+        quantity.appendChild(optionSeven);
+
+        let optionEight = document.createElement('option');
+        optionEight.value = 8;
+        optionEight.textContent = '8';
+        quantity.appendChild(optionEight);
+
+        let optionNine = document.createElement('option');
+        optionNine.value = 9;
+        optionNine.textContent = '9';
+        quantity.appendChild(optionNine);
+
+        let optionTen = document.createElement('option');
+        optionTen.value = 10;
+        optionTen.textContent = '10';
+        quantity.appendChild(optionTen);
+
+        quantity.value = item.quantity;
+
+        let price = document.createElement('td');
+        newLine.appendChild(price);
         price.textContent = item.price * item.quantity + ' €';
 
+        /*
+        let itemPrice = item.quantity * item.price;
+        totalPrice += itemPrice;
+        */
+
+        // écoute du changement de quantité d'un produit
+        quantity.addEventListener('input', (event) => {
+            let newQuanity = event.target.value;
+            item.quantity = newQuanity;
+            console.log(item.quantity);
+
+            // changer la valeur dans le local storage 
+            let localStorage = getStorageData();
+            console.log('local storage après modif de qté', localStorage);
+
+            // changer la valeur dans la map
+            let newObject = {id: item.id, name: item.name, color: item.color, quantity: item.quantity, price: item.price};
+            let newKey = item.id + item.color.replace(/\s/g, '');
+            basket.delete(newKey);
+            basket.set(newKey, newObject);
+            console.log(basket);
+
+            // changer prix de la ligne 
+            price.textContent = item.price * item.quantity + ' €';
+
+            // changer le prix total
+            displayTotalPrice(data);
+
+            // modifier le tableau products
+            products = [];
+            buildOrderArray(data);
+
+        });
+    }
+};
+
+const displayTotalPrice = (data) => {
+    let totalPrice = 0;
+    for (let item of data.values()) {
         let itemPrice = item.quantity * item.price;
         totalPrice += itemPrice;
     }
-    let displayedPrice = document.createElement('p');
-    displayedPrice.classList.add('total-price');
-    document.getElementById('price-container').appendChild(displayedPrice);
-    displayedPrice.textContent = 'Prix total à payer : ' + totalPrice + ' €';
-    displayedPrice.classList.add('text-primary', 'text-center', 'border', 'border-primary');
+    //afficher le prix total
+    if(document.getElementById('total-price') == null) {
+        let displayedPrice = document.createElement('p');
+        displayedPrice.setAttribute('id', 'total-price');
+        displayedPrice.classList.add('text-primary', 'text-center', 'border', 'border-primary');
+        document.getElementById('price-container').appendChild(displayedPrice);
+    }
+
+    document.getElementById('total-price').textContent = 'Prix total à payer : ' + totalPrice + ' €';
 };
 
 // Construire le tableau produit à envoyer au serveur
 
-const buildOrderArray = () => {
-    if(basket != null) {
-        for(let item of basket.values()) {
+const buildOrderArray = (data) => {
+    if(data != null) {
+        for(let item of data.values()) {
             let itemId = item.id;
             let itemQuantity = parseInt(item.quantity);
             for(let i = 0 ; i < itemQuantity ; i++) {
@@ -110,7 +215,8 @@ const processBasket = () => {
     if(storageContent != null) {
         summarizeOrder(storageContent)
         displayData(basket)
-        buildOrderArray()
+        displayTotalPrice(basket)
+        buildOrderArray(basket)
     } else {
         disableForm(true);
         document.getElementById('basket-info').textContent = 'Votre panier est vide';
