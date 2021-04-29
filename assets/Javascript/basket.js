@@ -189,13 +189,15 @@ const buildOrderArray = (data) => {
 
 const processBasket = () => {
     basket = getStorageData();
-    if(basket != null) {
+    if(basket.size != 0) {
         displayData(basket)
         displayTotalPrice(basket)
         buildOrderArray(basket)
+        console.log(basket);
     } else {
         disableForm(true);
         document.getElementById('basket-info').textContent = 'Votre panier est vide';
+        document.getElementById('price-container').textContent = '';
         basketBtn.disabled = true;
     }
 };
