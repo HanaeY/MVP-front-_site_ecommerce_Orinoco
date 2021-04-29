@@ -58,60 +58,13 @@ const displayData = (data) => {
         let quantity = document.createElement('select');
         quantityBox.appendChild(quantity);
 
-        let optionZero = document.createElement('option');
-        optionZero.value = 0;
-        optionZero.textContent = '0';
-        quantity.appendChild(optionZero);
-
-        let optionOne = document.createElement('option');
-        optionOne.value = 1;
-        optionOne.textContent = '1';
-        quantity.appendChild(optionOne);
-
-        let optionTwo = document.createElement('option');
-        optionTwo.value = 2;
-        optionTwo.textContent = '2';
-        quantity.appendChild(optionTwo);
-
-        let optionThree = document.createElement('option');
-        optionThree.value = 3;
-        optionThree.textContent = '3';
-        quantity.appendChild(optionThree);
-
-        let optionFour = document.createElement('option');
-        optionFour.value = 4;
-        optionFour.textContent = '4';
-        quantity.appendChild(optionFour);
-
-        let optionFive = document.createElement('option');
-        optionFive.value = 5;
-        optionFive.textContent = '5';
-        quantity.appendChild(optionFive);
-
-        let optionSix = document.createElement('option');
-        optionSix.value = 6;
-        optionSix.textContent = '6';
-        quantity.appendChild(optionSix);
-
-        let optionSeven = document.createElement('option');
-        optionSeven.value = 7;
-        optionSeven.textContent = '7';
-        quantity.appendChild(optionSeven);
-
-        let optionEight = document.createElement('option');
-        optionEight.value = 8;
-        optionEight.textContent = '8';
-        quantity.appendChild(optionEight);
-
-        let optionNine = document.createElement('option');
-        optionNine.value = 9;
-        optionNine.textContent = '9';
-        quantity.appendChild(optionNine);
-
-        let optionTen = document.createElement('option');
-        optionTen.value = 10;
-        optionTen.textContent = '10';
-        quantity.appendChild(optionTen);
+        for(let i = 0 ; i < 10 ; i++) {
+            let option = document.createElement('option');
+            option.value = parseInt(i, 10);
+            console.log(typeof(option.value));
+            option.textContent = i;
+            quantity.appendChild(option);
+        }
 
         quantity.value = item.quantity;
 
