@@ -48,9 +48,12 @@ const displayTeddyData = (data) => {
     document.getElementById('selected-teddy-name').textContent = data.name;
     document.getElementById('selected-teddy-description').textContent = data.description;
     document.getElementById('selected-teddy-price').textContent = 'Prix total : ' + data.price / 100 + '€';
-    document.getElementById('selected-teddy-img').setAttribute('src', data.imageUrl);
-    document.getElementById('selected-teddy-img').setAttribute('alt', 'photo de ' + data.name);
-    document.getElementById('selected-teddy-img').setAttribute('href', 'product.html?id=' + data._id);
+    let image = document.createElement('img');
+    document.getElementById('image-container').appendChild(image);
+    image.classList.add('card-img');
+    image.setAttribute('src', data.imageUrl);
+    image.setAttribute('alt', 'photo de ' + data.name);
+    image.setAttribute('href', 'product.html?id=' + data._id);
     
     for(i = 0 ; i < data.colors.length ; i++) {
         let option = document.createElement('option');
