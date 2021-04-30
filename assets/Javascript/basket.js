@@ -251,7 +251,7 @@ basketBtn.addEventListener('click', clearBasket);
     window.location.replace('confirmation.html');
  };
 
- /// Appel de la fonction d'envoi de la commande 
+ // Appel de la fonction d'envoi de la commande 
    
  submit()
 

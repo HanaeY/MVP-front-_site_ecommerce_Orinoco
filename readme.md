@@ -1,15 +1,16 @@
 # Projet Orinoco
 ## Introduction
 Projet réalisé dans le cadre du parcours de formation "Web Développeur" Openclassrooms (projet n°5 du parcours). 
-<br>
+
+### Objectif
 L'objectif du projet est de pratiquer le javascript pour le web. Les compétences évaluées sont les capacités à : 
 * Interagir avec un web service avec JavaScript
 * Créer un plan de test pour une application
 * Valider des données issues de sources externes
 * Gérer des événements JavaScript
-<br>
-<br>
-Scénario : l'entreprise Orinoco souhaite se démarquer des grands sites de e-commerce généralistes en proposant plusieurs applications thématiques. Pour ce projet, il est demandé de réaliser un mvp pour une thématique de produits qui sera ensuite présentée aux potentiels investisseurs de l'entreprise.
+
+### Scénario 
+L'entreprise Orinoco souhaite se démarquer des grands sites de e-commerce généralistes en proposant plusieurs applications thématiques. Pour ce projet, il est demandé de réaliser un mvp pour une thématique de produits qui sera ensuite présentée aux potentiels investisseurs de l'entreprise.
 ## Technologies 
 * html
 * css, librairie Bootstrap
