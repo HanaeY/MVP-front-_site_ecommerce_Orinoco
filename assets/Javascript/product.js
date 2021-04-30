@@ -28,9 +28,9 @@ const getTeddyId = () => {
 
 const getTeddyData = async () => {
     try {
-        var response = await fetch('http://localhost:3000/api/teddies/' + teddyId)
+        let response = await fetch('http://localhost:3000/api/teddies/' + teddyId)
         if(response.ok) {
-            var teddyData = await response.json();
+            let teddyData = await response.json();
             displayTeddyData(teddyData);
             updatePrice(teddyData);
             addToBasket(teddyData);
@@ -109,6 +109,7 @@ const addToBasket = (data) => {
 
         if(basket.has(key)) {
             let storedQuantity = parseInt(basket.get(key).quantity); 
+            quantity = parseInt(quantity);
             newQuantity = quantity + storedQuantity;
             item = new BasketItem(teddyId, data.name, color, newQuantity, data.price);
             basket.delete(key);

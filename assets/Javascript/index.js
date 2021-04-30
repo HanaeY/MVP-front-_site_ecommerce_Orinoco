@@ -2,9 +2,11 @@
 
 // Appel de l'API pour récupérer les données des teddies 
 
-const getTeddies = async () => {
+let url = 'http://localhost:3000/api/teddies';
+
+const getTeddies = async (url) => {
     try {
-        const response = await fetch('http://localhost:3000/api/teddies');
+        const response = await fetch(url);
         if(response.ok) {
             let teddies = await response.json();
             displayTeddies(teddies)
@@ -55,4 +57,4 @@ const displayTeddies = (data) => {
 
 // appel de la fonction 
 
-getTeddies()
+getTeddies(url)

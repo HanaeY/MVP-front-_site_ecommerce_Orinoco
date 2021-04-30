@@ -40,7 +40,7 @@ const getStorageData = () => {
 // Afficher les données du résumé de commande sur la page 
 
 const displayData = (data) => {
-    let totalPrice = 0;
+    
     for(let item of data.values()){
         let newLine = document.createElement('tr');
         document.getElementById('table').appendChild(newLine);
@@ -61,7 +61,7 @@ const displayData = (data) => {
         for(let i = 0 ; i < 10 ; i++) {
             let option = document.createElement('option');
             option.value = parseInt(i, 10);
-            console.log(typeof(option.value));
+        
             option.textContent = i;
             quantity.appendChild(option);
         }
@@ -146,7 +146,7 @@ const processBasket = () => {
         displayData(basket)
         displayTotalPrice(basket)
         buildOrderArray(basket)
-        console.log(basket);
+        
     } else {
         disableForm(true);
         document.getElementById('basket-info').textContent = 'Votre panier est vide';
