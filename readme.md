@@ -3,7 +3,9 @@
 Projet réalisé dans le cadre du parcours de formation "Web Développeur" Openclassrooms (projet n°5 du parcours). 
 
 ### Objectif
-L'objectif du projet est de pratiquer le javascript pour le web. Les compétences évaluées sont les capacités à : 
+L'objectif du projet est de réaliser le MVP d'un site e-commerce. Le développeur a carte blanche pour le design et l'API lui est fournie. 
+
+Compétences mises à profit : 
 * Interagir avec un web service avec JavaScript
 * Créer un plan de test pour une application
 * Valider des données issues de sources externes
